@@ -1,0 +1,51 @@
+
+spring:
+  data:
+    redis:
+      host: localhost   # Dirección del servidor Redis
+      port: 6379        # Puerto del servidor Redis
+      lettuce:
+        pool:
+          max-active: 8
+    mongodb:
+      host: localhost
+      port: 27017
+      database: user
+  cloud:
+    azure:
+      active-directory:
+        enabled: true
+        profile:
+          tenant-id: 3e2397d7-105f-427e-a716-5294251389bd
+        credential:
+          client-id: 746bda1f-7781-4133-8a0b-9f9286fe3255
+          client-secret: cRB8Q~3v6enKiIBmVG0cMcK3mGoTj4f6fKd23a38
+  security:
+    oauth2:
+      client:
+       registration:
+          azure:
+            client-id: 746bda1f-7781-4133-8a0b-9f9286fe3255
+            client-secret: cRB8Q~3v6enKiIBmVG0cMcK3mGoTj4f6fKd23a38
+            scope: openid, profile, email,  offline_access
+            redirect-uri: "{baseUrl}/login/oauth2/code/"
+#            authorization-grant-type: authorization_code
+            provider: azure
+      provider:
+        azure:
+          issuer-uri: https://login.microsoftonline.com/3e2397d7-105f-427e-a716-5294251389bd/v2.0
+#        provider:
+#          microsoft:
+#            authorization-uri: https://login.microsoftonline.com/3e2397d7-105f-427e-a716-5294251389bd/oauth2/v2.0/authorize
+#            token-uri: https://login.microsoftonline.com/3e2397d7-105f-427e-a716-5294251389bd/oauth2/v2.0/token
+#            user-info-uri: https://graph.microsoft.com/oidc/userinfo
+#            jwk-set-uri: https://login.microsoftonline.com/3e2397d7-105f-427e-a716-5294251389bd/discovery/v2.0/keys
+server:
+  port: 9090
+  forward-headers-strategy: native
+  servlet:
+    session:
+      timeout: 30m
+  #test-user@UniversidadNacionalMayor608.onmicrosoft.com
+#Juan
+  #lkasd79234$

@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  springboot-azure-auth:
+    build:
+      context: ./authentication-demo
+      dockerfile: Dockerfile
+    container_name: springboot-azure-auth
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - app-network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MONGO_URI: mongodb://mongodb:27017
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+  node-app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/user
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
