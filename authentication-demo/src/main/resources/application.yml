@@ -46,6 +46,4 @@ server:
   servlet:
     session:
       timeout: 30m
-  #test-user@UniversidadNacionalMayor608.onmicrosoft.com
-#Juan
-  #lkasd79234$
+ 
